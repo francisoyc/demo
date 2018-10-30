@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SpringbootmybatisApplication {
 
 	public static void main(String[] args) {
-		System.out.println("安抚方式");
+		System.out.println("fksdlgmslbmdh");
 		SpringApplication.run(SpringbootmybatisApplication.class, args);
 	}
 }
