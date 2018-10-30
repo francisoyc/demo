@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SpringbootmybatisApplication {
 
 	public static void main(String[] args) {
-		System.out.println("fq299495966967070040424455667slbmdh");
+		System.out.println("f");
 		SpringApplication.run(SpringbootmybatisApplication.class, args);
 	}
 }
