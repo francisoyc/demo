@@ -81,7 +81,7 @@ public class StudentController {
         //是否是最后一页
         map.addAttribute("isLastPage", pageInfo.isIsLastPage());
         map.addAttribute("studentList", pageInfo.getList());
-        // int i = 1/0;
+        // int i = 1/0; afkslgflg,tlf
         return "student/list";
     }
 
