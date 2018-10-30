@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="../Css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="../Css/bootstrap-responsive.css" />
+    <link rel="stylesheet" type="text/css" href="../Css/style.css" />
+    <script type="text/javascript" src="../Js/jquery.js"></script>
+    <script type="text/javascript" src="../Js/jquery.sorted.js"></script>
+    <script type="text/javascript" src="../Js/bootstrap.js"></script>
+    <script type="text/javascript" src="../Js/ckform.js"></script>
+    <script type="text/javascript" src="../Js/common.js"></script>
+
+    <style type="text/css">
+        body {
+            padding-bottom: 40px;
+        }
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+
+        @media (max-width: 980px) {
+            /* Enable use of floated navbar text */
+            .navbar-text.pull-right {
+                float: none;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+
+
+    </style>
+
+    <script type="text/javascript">
+        $(function () {
+            $.ajax({
+                //几个参数需要注意一下
+                type: "POST",//方法类型
+                dataType: "json",//预期服务器返回的数据类型
+                url: "/list" ,//url
+                success: function (data) {
+                    var trs = "";
+                    $.each(data, function (n, value) {
+                        trs += "<tr><td>" + value.id + "</td><td>" + value.name + "</td><td>" + value.sex
+                            + "</td><td>" + value.age + "</td><td>" + value.cls + "</td><td>" + value.address
+                            + "</td><td><a class='btn btn-success' onclick=\"alert(" + value.id + ")\">编辑</a><span style='display: inline-block;width: 30px;'>&nbsp;</span><a class='btn btn-danger'>删除</a></td></tr>";
+                    })
+                    $("#oTbody").append(trs);
+                },
+                error : function() {
+                    alert("异常！");
+                }
+            });
+        })
+    </script>
+</head>
+<body>
+<form class="form-inline definewidth m20" action="index.html" method="get">  
+    姓名：
+    <input type="text" name="rolename" id="rolename" class="abc input-default" placeholder="" value="">&nbsp;&nbsp;
+    <button type="submit" class="btn btn-primary">查询</button>&nbsp;&nbsp; <button type="button" class="btn btn-success" id="addnew">添加学生</button>
+</form>
+<table class="table table-bordered table-hover definewidth m10" >
+    <thead>
+        <tr>
+            <th style="width: 8%;">学生编号</th>
+            <th style="width: 10%;">姓名</th>
+            <th style="width: 8%;">性别</th>
+            <th style="width: 8%;">年龄</th>
+            <th style="width: 8%;">班级</th>
+            <th style="width: 35%;">家庭住址</th>
+            <th style="width: 15%;">管理</th>
+        </tr>
+    </thead>
+    <tbody id="oTbody">
+    <!--<tr th:each="student : ${studentList}">-->
+        <!--<th scope="row" th:text="${student.id}"></th>-->
+        <!--<td th:text="${student.name}"></td>-->
+        <!--<td th:text="${student.sex}"></td>-->
+        <!--<td th:text="${student.age}"></td>-->
+        <!--&lt;!&ndash;<td><a class="btn btn-danger" th:href="@{/users/delete/{userId}(userId=${student.id})}">删除</a></td>&ndash;&gt;-->
+        <!--<td><a class="btn btn-danger" th:onclick="'alert('+${student.age}+')'">删除</a></td>-->
+    <!--</tr>-->
+    </tbody>
+</table>
+<div class="inline pull-right page">
+         10122 条记录 1/507 页  <a href='#'>下一页</a>     <span class='current'>1</span><a href='#'>2</a><a href='/chinapost/index.php?m=Label&a=index&p=3'>3</a><a href='#'>4</a><a href='#'>5</a>  <a href='#' >下5页</a> <a href='#' >最后一页</a>    </div>
+</body>
+</html>
+<script>
+    $(function () {
+        
+		$('#addnew').click(function(){
+				window.location.href="add.html";
+		 });
+
+
+    });
+
+	function del(id)
+	{
+		if(confirm("确定要删除吗？"))
+		{
+			var url = "index.html";
+			window.location.href=url;
+		}
+	
+	
+	
+	
+	}
+</script>

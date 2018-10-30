@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" type="text/css" href="bui/Css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="bui/Css/bootstrap-responsive.css" />
+    <link rel="stylesheet" type="text/css" href="bui/Css/style.css" />
+    <script type="text/javascript" src="bui/Js/jquery.js"></script>
+    <script type="text/javascript" src="bui/Js/bootstrap.js"></script>
+    <script type="text/javascript" src="bui/Js/ckform.js"></script>
+    <script type="text/javascript" src="bui/Js/common.js"></script>
+    <title></title>
+
+    <style type="text/css">
+        body {
+            padding-bottom: 40px;
+        }
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+
+        ul > li {
+            display: inline-block;
+            width: 20px;
+        }
+
+        .diva a {
+            margin-left: 15px;
+        }
+
+        @media (max-width: 980px) {
+            /* Enable use of floated navbar text */
+            .navbar-text.pull-right {
+                float: none;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+    </style>
+
+</head>
+<body oncontextmenu="return false" ondragstart="return false" onselectstart ="return false" onselect="document.selection.empty()" oncopy="document.selection.empty()" onbeforecopy="return false" onmouseup="document.selection.empty()">
+<form class="form-inline definewidth m20" th:action="@{/list}" th:object="${student}" method="get">
+    姓名：
+    <input type="text" class="abc input-default" style="width: 150px;" th:field="*{name}" />&nbsp;&nbsp;
+    <span style="display: inline-block;width: 30px;">&nbsp;</span>
+    <button type="submit" class="btn btn-primary">查询</button>
+    <span style="display: inline-block;width: 20px;">&nbsp;</span>
+    <button type="button" class="btn btn-success" id="addnew">添加学生</button>
+</form>
+<table class="table table-bordered table-hover definewidth m10" >
+    <thead>
+    <tr>
+        <th style="width: 8%;">学生编号</th>
+        <th style="width: 10%;">姓名</th>
+        <th style="width: 8%;">性别</th>
+        <th style="width: 8%;">年龄</th>
+        <th style="width: 8%;">班级</th>
+        <th style="width: 35%;">家庭住址</th>
+        <th style="width: 15%;">管理</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="student : ${studentList}">
+        <td scope="row" th:text="${student.id}"></td>
+        <td th:text="${student.name}"></td>
+        <td th:text="${student.sex}"></td>
+        <td th:text="${student.age}"></td>
+        <td th:text="${student.cls}"></td>
+        <td th:text="${student.address}"></td>
+        <td>
+            <a class="btn btn-success" th:href="@{/update(id=${student.id})}">编辑</a>
+            <span style="display: inline-block;width: 30px;">&nbsp;</span>
+            <a class="btn btn-danger" data-toggle="modal" th:onclick="'javascript:deleteById('+${student.id}+')'">删除</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div style="margin-top: 10px;">
+    <div style="display: inline-block;padding-left: 25px;">
+        当前第<span th:text="${pageNum}"></span>页，
+        共<span th:text="${totalPages}"></span>页，
+        共<span th:text="${totalNums}"></span>条记录
+    </div>
+    <div class="diva" style="display: inline-block;float: right;padding-right: 25px;">
+        <a class="btn btn-success" th:if="${not isFirstPage}" th:href="@{${'/list'}(pageNum=1,pageSize=${pageSize})}">首&nbsp;&nbsp;&nbsp;页</a>
+        <a class="btn btn-default" th:if="${isFirstPage}" disabled="disabled">首&nbsp;&nbsp;&nbsp;页</a>
+        <a class="btn btn-success" th:if="${not isFirstPage}" th:href="@{${'/list'}(pageNum=${pageNum-1},pageSize=${pageSize})}">上一页</a>
+        <a class="btn btn-default" th:if="${isFirstPage}" disabled="disabled">上一页</a>
+        <!--<ul style="list-style: none;display: inline-block;margin-left: 0px;">-->
+            <!--<li th:each="pageNo : ${#numbers.sequence(1, 5)}">-->
+                <!--<a th:if="${pageNum eq pageNo}" href="javascript:void(0);">-->
+                    <!--<span th:text="${pageNo}"></span>-->
+                <!--</a>-->
+                <!--<a th:if="${not (pageNum eq pageNo)}" th:href="@{${'/list'}(pageNum=${pageNo},pageSize=${pageSize})}">-->
+                    <!--<span th:text="${pageNo}"></span>-->
+                <!--</a>-->
+            <!--</li>-->
+        <!--</ul>-->
+        <a class="btn btn-success" th:if="${not isLastPage}" th:href="@{${'/list'}(pageNum=${pageNum+1},pageSize=${pageSize})}" >下一页</a>
+        <a class="btn btn-default" th:if="${isLastPage}" disabled="disabled">下一页</a>
+        <a class="btn btn-success" th:if="${not isLastPage}" th:href="@{${'/list'}(pageNum=${totalPages},pageSize=${pageSize})}" >尾&nbsp;&nbsp;&nbsp;页</a>
+        <a class="btn btn-default" th:if="${isLastPage}" disabled="disabled">尾&nbsp;&nbsp;&nbsp;页</a>
+    </div>
+</div>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" style="width: 400px;" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    温馨提示
+                </h4>
+            </div>
+            <div class="modal-body">
+                确认删除该学生信息吗？
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                </button>
+                <button type="button" class="btn btn-primary" onclick="confirmDelete();">
+                    确定
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+</body>
+</html>
+<script>
+    $(function () {
+        $('#addnew').click(function(){
+            $.ajax({
+                //几个参数需要注意一下
+                type: "GET",//方法类型
+                url: "/add" ,//url
+                success: function (data) {
+                    window.location.href="add.html";
+                },
+                error : function() {
+                    alert("异常！");
+                }
+            });
+        });
+
+    });
+
+    function deleteById(id) {
+        $('#myModal').modal({
+            show: true
+        });
+
+        confirmDelete = function() {
+            $.ajax({
+                //几个参数需要注意一下
+                type: "POST",//方法类型
+                url: "/deleteStudent" ,//url
+                data: {id: id},
+//                dataType: "json",
+                success: function (data) {
+//                    alert("删除成功！");
+                    window.location.href="list.html";
+                },
+                error : function() {
+                    alert("删除失败！");
+                }
+            });
+        }
+
+
+    }
+</script>
