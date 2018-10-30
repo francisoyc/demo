@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SpringbootmybatisApplication {
 
 	public static void main(String[] args) {
-		System.out.println("f");
+		System.out.println("asdknslng");
 		SpringApplication.run(SpringbootmybatisApplication.class, args);
 	}
 }
