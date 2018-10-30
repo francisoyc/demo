@@ -20,5 +20,6 @@ public class GlobalExceptionHandler {
         map.put("success", false);
         map.put("errorMsg", exception.getMessage());
         return map;
+        // fafngskgv
     }
 }
