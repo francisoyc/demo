@@ -21,6 +21,7 @@ public class Customer  {
     @Test
     public void receive() {
         try {
+            // ajifjlgmhlt
             ConnectionFactory factory = new ConnectionFactory();
             factory.setVirtualHost("francis01");
             factory.setHost("127.0.0.1");
