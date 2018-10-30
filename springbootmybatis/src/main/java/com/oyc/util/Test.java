@@ -36,7 +36,7 @@ public class Test {
     @org.junit.Test
     public void testMongoDb() {
 
-        // 测试一下
+        // 测试一下 11234台台湾也给我
         
         // 获取链接
       //  MongoClient mongoClient = new MongoClient("127.0.0.1", 27017);
