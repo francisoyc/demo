@@ -124,7 +124,7 @@
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
-			<version>1.2.41</version>
+			<version>1.2.83</version>
 		</dependency>
 		<!-- 让 Thymeleaf 不那么严格的解析XML格式 如模板中有未闭合的单标签，系统会自动帮你闭合 -->
 		<dependency>
